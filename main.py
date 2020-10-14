@@ -3,6 +3,7 @@ from discord.ext import tasks
 import requests
 from datetime import datetime
 import os
+import pytz
 
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
@@ -24,11 +25,11 @@ async def on_ready():
     tmp = await channel.send('Cleaning...')
     await channel.purge()
     print('discord set up sucessfully')
-    failed = await channel.send('Past Incidents:')
-    messageready = await channel.send('Currently:')
+    failed = await channel.send('History:')
+    messageready = await channel.send('Now:')
 
     failedstatus = discord.Embed(title='Past Incidents:')
-    failedstatus.set_footer(text='\nEnd of Past Incidents Report'.format(datetime.now(tz='Almaty')))
+    failedstatus.set_footer(text='\nEnd of Past Incidents Report'.format(datetime.now(pytz.timezone('Asia/Almaty')).replace(microsecond=0, tzinfo=None)))
     await failed.edit(embed=failedstatus)
 
     embed = discord.Embed(title='Web resources Live status')
@@ -40,7 +41,7 @@ async def on_ready():
     embed.add_field(name='Turnitin', value='loading...', inline=True)
     embed.add_field(name='Library', value='loading...', inline=True)
 
-    embed.set_footer(text='\n✅ - Running\n❌ - Unavailable\nLast Update: not updated yet')
+    embed.set_footer(text='\n✅ - Up\n❌ - Unavailable\nLast Update: not updated yet')
 
     await messageready.edit(embed=embed)
 
@@ -65,7 +66,7 @@ async def query(messageready, failedstatus, failed):
     embed.add_field(name='Turnitin', value=turnitin, inline=True)
     embed.add_field(name='Library', value=lib, inline=True)
 
-    embed.set_footer(text='\n✅ - Running\n❌ - Unavailable\nLast Update: {}'.format(datetime.now(tz='Almaty')))
+    embed.set_footer(text='\n✅ - Running\n❌ - Unavailable\nLast Update: {}'.format(datetime.now(pytz.timezone('Asia/Almaty')).replace(microsecond=0, tzinfo=None)))
 
     await messageready.edit(embed=embed)
 
@@ -81,7 +82,7 @@ async def checkstatus(url,failedstatus, failed):
 
 async def offline(url, failedstatus, failed):
     global n
-    failedstatus.insert_field_at(index=n, name=url, value='❌ at {}'.format(datetime.now(tz='Almaty')), inline=False)
+    failedstatus.insert_field_at(index=n, name=url, value='❌ at {}'.format(datetime.now(pytz.timezone('Asia/Almaty')).replace(microsecond=0, tzinfo=None)), inline=False)
     n = n+1
     await failed.edit(embed=failedstatus)
 
