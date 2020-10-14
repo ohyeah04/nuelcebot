@@ -24,7 +24,7 @@ async def on_ready():
     channel = bot.get_channel(int(765830945428471808))
     tmp = await channel.send('Cleaning...')
     await channel.purge()
-    print('discord set up sucessfully')
+    print('discord hook set up sucessfully')
     failed = await channel.send('History:')
     messageready = await channel.send('Now:')
 
@@ -82,7 +82,22 @@ async def checkstatus(url,failedstatus, failed):
 
 async def offline(url, failedstatus, failed):
     global n
-    failedstatus.insert_field_at(index=n, name=url, value='❌ at {}'.format(datetime.now(pytz.timezone('Asia/Almaty')).replace(microsecond=0, tzinfo=None)), inline=False)
+    offlineresource = ''
+
+    if url == moodleurl:
+        offlineresource = 'NU Moodle'
+    elif url == mynuurl:
+        offlineresource = 'MyNU'
+    elif url == liburl:
+        offlineresource = 'Library'
+    elif url == webworkurl:
+        offlineresource = 'WebWork'
+    elif url == regisrarurl:
+        offlineresource = 'Registrar'
+    elif url == turnitinurl:
+        offlineresource = 'Turnitin'
+
+    failedstatus.insert_field_at(index=n, name=offlineresource, value='❌ at {}'.format(datetime.now(pytz.timezone('Asia/Almaty')).replace(microsecond=0, tzinfo=None)), inline=False)
     n = n+1
     await failed.edit(embed=failedstatus)
 
