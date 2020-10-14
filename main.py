@@ -2,8 +2,9 @@ import discord
 from discord.ext import tasks
 import requests
 from datetime import datetime
+import os
 
-TOKEN = ''
+TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
 url = 'http://moodle.nu.edu.kz'
 url2 = 'http://asddasadhdas.com'
