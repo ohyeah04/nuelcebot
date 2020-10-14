@@ -21,7 +21,7 @@ bot = discord.Client()
 
 @bot.event
 async def on_ready():
-    channel = bot.get_channel(int(764473005568294923))
+    channel = bot.get_channel(int(765830945428471808))
     tmp = await channel.send('Cleaning...')
     await channel.purge()
     print('discord set up sucessfully')
