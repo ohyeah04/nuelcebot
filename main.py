@@ -48,7 +48,7 @@ async def on_ready():
     await query.start(messageready, failedstatus, failed)
 
 
-@tasks.loop(minutes=1.0, count=None)
+@tasks.loop(minutes=1.5, count=None)
 async def query(messageready, failedstatus, failed):
     moodle = '✅' if await checkstatus(moodleurl, failedstatus, failed) else '❌'
     mynu = '✅' if await checkstatus(mynuurl,failedstatus, failed) else '❌'
@@ -73,7 +73,7 @@ async def query(messageready, failedstatus, failed):
 
 async def checkstatus(url,failedstatus, failed):
     try:
-        requests.get(url, timeout=10)
+        requests.get(url, timeout=7)
         return True
     except:
         await offline(url, failedstatus, failed)
