@@ -6,8 +6,13 @@ import os
 
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
-url = 'http://moodle.nu.edu.kz'
-url2 = 'http://asddasadhdas.com'
+moodleurl = "http://moodle.nu.edu.kz/"
+mynuurl = "http://my.nu.edu.kz/"
+liburl = "http://library.nu.edu.kz/"
+webworkurl = "http://webwork.sst.nu.edu.kz/webwork2"
+regisrarurl = "http://registrar.nu.edu.kz/"
+turnitinurl = "http://ev.turnitin.com/"
+
 n = 0
 
 bot = discord.Client()
@@ -23,7 +28,7 @@ async def on_ready():
     messageready = await channel.send('Currently:')
 
     failedstatus = discord.Embed(title='Past Incidents:')
-    failedstatus.set_footer(text='\nEnd of Past Incidents Report'.format(datetime.now()))
+    failedstatus.set_footer(text='\nEnd of Past Incidents Report'.format(datetime.now(tz='Almaty')))
     await failed.edit(embed=failedstatus)
 
     embed = discord.Embed(title='Web resources Live status')
@@ -44,12 +49,12 @@ async def on_ready():
 
 @tasks.loop(minutes=1.0, count=None)
 async def query(messageready, failedstatus, failed):
-    moodle = '✅' if await checkstatus(url, failedstatus, failed) else '❌'
-    mynu = '✅' if await checkstatus(url,failedstatus, failed) else '❌'
-    lib = '✅' if await checkstatus(url2,failedstatus, failed) else '❌'
-    webwork = '✅' if await checkstatus(url2,failedstatus, failed) else '❌'
-    registrar = '✅' if await checkstatus(url,failedstatus, failed) else '❌'
-    turnitin = '✅' if await checkstatus(url,failedstatus, failed) else '❌'
+    moodle = '✅' if await checkstatus(moodleurl, failedstatus, failed) else '❌'
+    mynu = '✅' if await checkstatus(mynuurl,failedstatus, failed) else '❌'
+    lib = '✅' if await checkstatus(liburl,failedstatus, failed) else '❌'
+    webwork = '✅' if await checkstatus(webworkurl,failedstatus, failed) else '❌'
+    registrar = '✅' if await checkstatus(regisrarurl,failedstatus, failed) else '❌'
+    turnitin = '✅' if await checkstatus(turnitinurl,failedstatus, failed) else '❌'
 
     embed = discord.Embed(title='Web resources Live status')
     embed.add_field(name='Moodle', value=moodle, inline=True)
@@ -60,7 +65,7 @@ async def query(messageready, failedstatus, failed):
     embed.add_field(name='Turnitin', value=turnitin, inline=True)
     embed.add_field(name='Library', value=lib, inline=True)
 
-    embed.set_footer(text='\n✅ - Running\n❌ - Unavailable\nLast Update: {}'.format(datetime.now()))
+    embed.set_footer(text='\n✅ - Running\n❌ - Unavailable\nLast Update: {}'.format(datetime.now(tz='Almaty')))
 
     await messageready.edit(embed=embed)
 
@@ -76,7 +81,7 @@ async def checkstatus(url,failedstatus, failed):
 
 async def offline(url, failedstatus, failed):
     global n
-    failedstatus.insert_field_at(index=n, name=url, value='❌ at {}'.format(datetime.now()), inline=False)
+    failedstatus.insert_field_at(index=n, name=url, value='❌ at {}'.format(datetime.now(tz='Almaty')), inline=False)
     n = n+1
     await failed.edit(embed=failedstatus)
 
