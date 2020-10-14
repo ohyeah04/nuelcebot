@@ -4,7 +4,7 @@ import requests
 from datetime import datetime
 import os
 
-TOKEN = os.getenv("DISCORD_BOT_TOKEN")
+TOKEN = os.getenv("h")
 
 url = 'http://moodle.nu.edu.kz'
 url2 = 'http://asddasadhdas.com'
