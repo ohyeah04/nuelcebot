@@ -21,7 +21,7 @@ bot = discord.Client()
 
 @bot.event
 async def on_ready():
-    channel = bot.get_channel(int(765830945428471808))
+    channel = bot.get_channel(int(766545793384710165))
     tmp = await channel.send('Cleaning...')
     await channel.purge()
     print('discord hook set up sucessfully')
