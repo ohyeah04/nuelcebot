@@ -64,7 +64,7 @@ async def query(messageready, failedstatus, failed):
     registrar = '✅' if await checkstatus(regisrarurl, failedstatus, failed) else '❌'
     turnitin = '✅' if await checkstatus(turnitinurl, failedstatus, failed) else '❌'
 
-    embed = discord.Embed(title='Web resources Live status :check:')
+    embed = discord.Embed(title='Web resources Live status 💻')
     embed.add_field(name='Moodle', value=moodle, inline=True)
     embed.add_field(name='MyNU', value=mynu, inline=True)
     embed.add_field(name='Registrar', value=registrar, inline=True)
