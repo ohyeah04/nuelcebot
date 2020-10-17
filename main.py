@@ -73,7 +73,7 @@ async def query(messageready, failedstatus, failed):
     embed.add_field(name='Turnitin', value=turnitin, inline=True)
     embed.add_field(name='Library', value=lib, inline=True)
 
-    embed.set_footer(text='\n✅ - Up\n❌ - Unavailable\nLast Update: {}\nUpdates every minute'.format(
+    embed.set_footer(text='\n✅ - Up\n❌ - Unavailable\nLast Update: {}\nProvides real-time data'.format(
         datetime.now(pytz.timezone('Asia/Almaty')).replace(microsecond=0, tzinfo=None)))
 
     try:
