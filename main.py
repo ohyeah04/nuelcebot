@@ -18,20 +18,20 @@ turnitinurl = "http://ev.turnitin.com/"
 n = 0
 
 bot = discord.Client()
-messageable = discord.abc.Messageable()
 
 
 @bot.event
 async def on_ready():
     channel = bot.get_channel(int(766545793384710165))
-    failedmessage = await messageable.fetch_message(int(770173969089036308))
-    statusmesssage = await messageable.fetch_message(int(770173969961451560))
+    failedmessage = await channel.fetch_message(int(770173969089036308))
+    statusmesssage = await channel.fetch_message(int(770173969961451560))
 
-#    tmp = await channel.send('Cleaning...')
-#    await channel.purge()
+# we are not using purge anymore
+    #    tmp = await channel.send('Cleaning...')
+    #    await channel.purge()
     print('discord hook set up sucessfully')
-#    failed = await channel.send('History:')
-#    messageready = await channel.send('Now:')
+    #    failed = await channel.send('History:')
+    #    messageready = await channel.send('Now:')
 
     failedstatus = discord.Embed(title='Past Incidents:')
     failedstatus.set_footer(text='\nEnd of Past Incidents Report'.format(
@@ -116,9 +116,19 @@ async def offline(url, failedstatus, failed):
     elif url == turnitinurl:
         offlineresource = 'Turnitin'
 
-    failedstatus.insert_field_at(index=n, name=offlineresource, value='❌ at {}'.format(
+    failedstatus.add_field(name=offlineresource, value='❌ at {}'.format(
         datetime.now(pytz.timezone('Asia/Almaty')).replace(microsecond=0, tzinfo=None)), inline=False)
-    n = n + 1
+ #   n = n + 1
+
+#    if n == 3:
+#        failedstatus = None
+#        failedstatus = discord.Embed(title='Past Incidents:')
+#        failedstatus.set_footer(text='\nEnd of Past Incidents Report'.format(
+#            datetime.now(pytz.timezone('Asia/Almaty')).replace(microsecond=0, tzinfo=None)))
+
+#        await failed.edit(embed=failedstatus)
+#        n = 0
+#    else:
     await failed.edit(embed=failedstatus)
 
 
