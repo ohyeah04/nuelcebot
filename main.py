@@ -1,5 +1,6 @@
 import discord
 from discord.ext import tasks
+from discord import NotFound
 import requests
 from datetime import datetime
 import os
@@ -17,21 +18,25 @@ turnitinurl = "http://ev.turnitin.com/"
 n = 0
 
 bot = discord.Client()
+messageable = discord.abc.Messageable()
 
 
 @bot.event
 async def on_ready():
     channel = bot.get_channel(int(766545793384710165))
-    tmp = await channel.send('Cleaning...')
-    await channel.purge()
+    failedmessage = await messageable.fetch_message(int(770173969089036308))
+    statusmesssage = await messageable.fetch_message(int(770173969961451560))
+
+#    tmp = await channel.send('Cleaning...')
+#    await channel.purge()
     print('discord hook set up sucessfully')
-    failed = await channel.send('History:')
-    messageready = await channel.send('Now:')
+#    failed = await channel.send('History:')
+#    messageready = await channel.send('Now:')
 
     failedstatus = discord.Embed(title='Past Incidents:')
     failedstatus.set_footer(text='\nEnd of Past Incidents Report'.format(
         datetime.now(pytz.timezone('Asia/Almaty')).replace(microsecond=0, tzinfo=None)))
-    await failed.edit(embed=failedstatus)
+    await failedmessage.edit(embed=failedstatus)
 
     embed = discord.Embed(title='Web resources Live status')
     embed.add_field(name='Moodle', value='loading...', inline=True)
@@ -45,14 +50,14 @@ async def on_ready():
     embed.set_footer(text='\n✅ - Up\n❌ - Unavailable\nLast Update: not updated yet')
 
     try:
-        await messageready.edit(embed=embed)
+        await statusmesssage.edit(embed=embed)
     except:
         unknownstate = discord.Embed(title='Web resources Live status')
         unknownstate.add_field(name='Failed to retrieve data', value='❌', inline=True)
 
-        await messageready.edit(embed=unknownstate)
+        await statusmesssage.edit(embed=unknownstate)
 
-    await query.start(messageready, failedstatus, failed)
+    await query.start(statusmesssage, failedstatus, failedmessage)
 
 
 @tasks.loop(minutes=1.5, count=None)
