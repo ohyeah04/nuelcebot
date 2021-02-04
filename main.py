@@ -27,7 +27,7 @@ async def on_ready():
     statusmesssage = await channel.fetch_message(int(770173969961451560))
 
 # not sending anymore
-    spring = await channel.send('I am alive =)')
+#    spring = await channel.send('I am alive =)')
 
 # we are not using purge anymore
     #    tmp = await channel.send('Cleaning...')
