@@ -27,7 +27,7 @@ async def on_ready():
     statusmesssage = await channel.fetch_message(int(770173969961451560))
 
 # not sending anymore
-#    spring = await channel.send('Status of Spring20: Online 😢')
+    spring = await channel.send('I am alive =)')
 
 # we are not using purge anymore
     #    tmp = await channel.send('Cleaning...')
@@ -63,7 +63,7 @@ async def on_ready():
     await query.start(statusmesssage, failedstatus, failedmessage)
 
 
-@tasks.loop(minutes=1.5, count=None)
+@tasks.loop(minutes=2, count=None)
 async def query(messageready, failedstatus, failed):
     moodle = '✅' if await checkstatus(moodleurl, failedstatus, failed) else '❌'
     mynu = '✅' if await checkstatus(mynuurl, failedstatus, failed) else '❌'
@@ -95,7 +95,7 @@ async def query(messageready, failedstatus, failed):
 
 async def checkstatus(url, failedstatus, failed):
     try:
-        requests.get(url, timeout=5)
+        requests.get(url, timeout=10)
         return True
     except:
         await offline(url, failedstatus, failed)
